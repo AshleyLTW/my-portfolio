@@ -48,6 +48,11 @@ body {
 }
 
 /* Gallery styling */
+#gallery-text {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
