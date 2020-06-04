@@ -24,6 +24,10 @@ body {
   height: 90%;
 }
 
+.center {
+  text-align: center;
+}
+
 h1 {
   color: #B8DBD9;
 }
