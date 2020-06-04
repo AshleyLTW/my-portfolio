@@ -1,4 +1,4 @@
-#content {
+.content {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
@@ -13,56 +13,49 @@
   margin-top: 20px;
 }
 
+/* Nav bar styling */
+
 .nav-bar {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
+.nav-bar li {
+  display: inline;
+}
+
 /* Gallery styling */
-gallery {
-  border: 1px solid #ccc;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  justify-content: center;
 }
 
-gallery:hover {
-  border: 1px solid #777;
+.column {
+  flex: 22%;
+  max-width: 22%;
+  padding: 0 4px;
 }
 
-gallery img {
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
   width: 100%;
-  height: auto;
 }
 
-desc {
-  padding: 15px;
-  text-align: center;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.responsive {
-  padding: 0 6px;
-  float: left;
-  width: 24.99999%;
-}
-
-@media only screen and (max-width: 700px) {
-  .responsive {
-    width: 49.99999%;
-    margin: 6px 0;
+@media screen and (max-width: 1000px) {
+  .column {
+    flex: 45%;
+    max-width: 45%;
   }
 }
 
-@media only screen and (max-width: 500px) {
-  .responsive {
-    width: 100%;
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 90%;
+    max-width: 90%;
   }
-}
-
-.clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
 }
