@@ -70,6 +70,10 @@ img {
   text-decoration: none;
 }
 
+.nav-bar a:hover {
+  color: #9AA8B0;
+}
+
 /* Gallery styling */
 #gallery-text {
   margin-top: 20px;
