@@ -43,13 +43,16 @@ hr {
 }
 
 /* Home page styling */
-
 #greeting-container {
   margin-top: 20px;
 }
 
-/* Nav bar styling */
+/* Gallery styling */
+img {
+  border: 2px solid #465863;
+}
 
+/* Nav bar styling */
 .nav-bar {
   list-style-type: none;
   margin: 0;
