@@ -1,9 +1,9 @@
 html {
   background: #586F7C;
+  height: 100%;
 }
 
 body {
-  background: #B8DBD9;
   height: 100%;
 }
 
@@ -11,12 +11,15 @@ body {
   margin-left: auto;
   margin-right: auto;
   max-width: 50%;
+  background: #B8DBD9;
+  padding: 30px;
 }
 
 .aligner {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 /* Home page styling */
@@ -30,7 +33,7 @@ body {
 .nav-bar {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   background: #E49273;
 }
 
@@ -41,6 +44,7 @@ body {
 
 .nav-bar a {
   color: #2B4570;
+  text-decoration: none;
 }
 
 /* Gallery styling */
