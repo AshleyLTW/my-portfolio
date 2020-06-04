@@ -37,6 +37,11 @@ h5 {
   color: #586F7C
 }
 
+hr {
+  border-color: #B8DBD9;
+  margin-left: 30px;
+}
+
 /* Home page styling */
 
 #greeting-container {
