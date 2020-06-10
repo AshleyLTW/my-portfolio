@@ -27,18 +27,17 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-async function getMessage() {
+async function getComments() {
   const response = await fetch('/data');
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
-  var i;
-  for (i = 0; i < messages.length; i++) {
-    messageContainer.appendChild(createListElt(messages[i]));
+  for (const message of messages) {
+    messageContainer.appendChild(createListElement(message));
   }
 }
 
-function createListElt(comment) {
+function createListElement(comment) {
   const liElement = document.createElement('li');
   liElement.innerText = comment.username + ": " + comment.text;
   return liElement;

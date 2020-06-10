@@ -49,10 +49,10 @@ public class DataServlet extends HttpServlet {
       Comment newComment = new Comment(text, username, timestamp);
       commentsList.add(newComment);
     }
-    // Convert ArrayList to Json
+
     Gson gson = new Gson();
     String jsonComments = gson.toJson(commentsList);
-    // Send JSON as response
+
     response.setContentType("application/json");
     response.getWriter().println(jsonComments);
   }
