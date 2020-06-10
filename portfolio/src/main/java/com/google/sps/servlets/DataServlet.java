@@ -26,7 +26,7 @@ import java.util.*;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  ArrayList<String> commentsList = new ArrayList(Arrays.asList("hello", "world"));
+  ArrayList<String> commentsList = new ArrayList();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -43,6 +43,7 @@ public class DataServlet extends HttpServlet {
     // Add comment to list of comments
     // TODO: Add functionality to store and display usernames
     String newComment = request.getParameter("comment");
-
+    commentsList.add(newComment);
+    response.sendRedirect("/index.html");
   }
 }
