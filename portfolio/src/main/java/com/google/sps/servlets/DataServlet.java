@@ -21,8 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.util.*;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 
-/** Servlet that returns a hardcoded message */
+/** Servlet that returns your comments */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -40,10 +43,19 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Add comment to list of comments
-    // TODO: Add functionality to store and display usernames
-    String newComment = request.getParameter("comment");
-    commentsList.add(newComment);
+    // Get text from form
+    String commentText = request.getParameter("comment");
+    String username = request.getParameter("username");
+//    commentsList.add(newComment);
+//    response.sendRedirect("/index.html");
+    // Store comment
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("text", commentText);
+    commentEntity.setProperty("username", username);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
     response.sendRedirect("/index.html");
   }
 }
