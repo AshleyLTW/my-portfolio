@@ -30,6 +30,7 @@ function addRandomGreeting() {
 async function getMessage() {
   const response = await fetch('/data');
   const messages = await response.json();
+  console.log(messages);
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
   var i;

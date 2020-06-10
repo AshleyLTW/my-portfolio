@@ -20,20 +20,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import java.util.*;
 
 /** Servlet that returns a hardcoded message */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private String[] ArrayList = {"This is message 1", "This is message 2", "This is message 3"};
+  ArrayList<String> commentsList = new ArrayList(Arrays.asList("hello", "world"));
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Convert ArrayList to Json
     Gson gson = new Gson();
-    String json = gson.toJson(ArrayList);
+    String json = gson.toJson(commentsList);
     // Send JSON as response
     response.setContentType("application/json");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Add comment to list of comments
+    // TODO: Add functionality to store and display usernames
+    String newComment = request.getParameter("comment");
+
   }
 }
