@@ -31,6 +31,7 @@ async function getMessage() {
   const response = await fetch('/data');
   const messages = await response.json();
   console.log(messages);
+  console.log("hi");
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
   var i;
@@ -39,8 +40,8 @@ async function getMessage() {
   }
 }
 
-function createListElt(text) {
+function createListElt(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  liElement.innerText = comment.text + comment.username;
   return liElement;
 }
