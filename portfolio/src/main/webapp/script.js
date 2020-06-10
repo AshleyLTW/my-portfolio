@@ -18,11 +18,29 @@
 function addRandomGreeting() {
   const greetings =
       ['I once got my hand stuck in a cow!', 'My favourite movie (trilogy) is the Lord of The Rings', 'There isn\'t enough sunshine in Melb, I find myself accidentally working in semi-darkness a lot'];
-  console.log("greeted")
+  console.log("greeted");
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+async function getMessage() {
+  const response = await fetch('/data');
+  const messages = await response.json();
+  console.log(messages);
+  const messageContainer = document.getElementById('message-container')
+  messageContainer.innerHTML = '';
+  var i;
+  for (i = 0; i < messages.length; i++) {
+    messageContainer.appendChild(createListElt(messages[i]));
+  }
+}
+
+function createListElt(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
