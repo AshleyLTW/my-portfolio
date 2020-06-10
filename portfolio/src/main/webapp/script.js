@@ -30,5 +30,16 @@ function addRandomGreeting() {
 async function getMessage() {
   const response = await fetch('/data');
   const messages = await response.json();
-  document.getElementById('message-container').innerText = messages;
+  const messageContainer = document.getElementById('message-container')
+  messageContainer.innerHTML = '';
+  var i;
+  for (i = 0; i < messages.length; i++) {
+    messageContainer.appendChild(createListElt(messages[i]));
+  }
+}
+
+function createListElt(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
