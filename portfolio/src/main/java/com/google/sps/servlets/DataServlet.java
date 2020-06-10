@@ -19,14 +19,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
 
 /** Servlet that returns a hardcoded message */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private String[] ArrayList = {"This is message 1", "This is message 2", "This is message 3"};
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Convert ArrayList to Json
+    Gson gson = new Gson();
+    String json = gson.toJson(ArrayList);
     response.setContentType("text/html;");
-    response.getWriter().println("Hello User!");
+    response.getWriter().println(json);
   }
 }

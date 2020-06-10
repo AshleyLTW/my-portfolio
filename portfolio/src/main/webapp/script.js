@@ -18,7 +18,7 @@
 function addRandomGreeting() {
   const greetings =
       ['I once got my hand stuck in a cow!', 'My favourite movie (trilogy) is the Lord of The Rings', 'There isn\'t enough sunshine in Melb, I find myself accidentally working in semi-darkness a lot'];
-  console.log("greeted")
+  console.log("greeted");
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
@@ -29,6 +29,6 @@ function addRandomGreeting() {
 
 async function getMessage() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('message-container').innerText = quote;
+  const messages = await response.json();
+  document.getElementById('message-container').innerText = messages;
 }
