@@ -28,7 +28,7 @@ function addRandomGreeting() {
 }
 
 async function getComments(commentLimit) {
-  const response = await fetch('/data?numComments=' + commentLimit);
+  const response = await fetch('/data?commentLimit=' + commentLimit);
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
@@ -47,7 +47,8 @@ function filterComments(value) {
 async function deleteComments() {
   const response = await fetch('/delete-data', {
     method: 'POST'
-   })
+    })
+  getComments(document.getElementById('commentLimit').value);
 }
 
 function createListElement(comment) {

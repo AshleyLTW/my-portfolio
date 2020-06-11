@@ -38,10 +38,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Load comments from Datastore
-    int numComments = Integer.parseInt(request.getParameter("numComments"));
+    int commentLimit = Integer.parseInt(request.getParameter("commentLimit"));
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(numComments));
+    List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(commentLimit));
 
     ArrayList<Comment> commentsList = new ArrayList();
     for (Entity entity : results) {
