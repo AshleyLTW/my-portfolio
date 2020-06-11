@@ -44,6 +44,12 @@ function filterComments(value) {
   }
 }
 
+async function deleteComments() {
+  const response = await fetch('/delete-data', {
+    method: 'POST'
+   })
+}
+
 function createListElement(comment) {
   const liElement = document.createElement('li');
   liElement.innerText = comment.username + ': ' + comment.text;
