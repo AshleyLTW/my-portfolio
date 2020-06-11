@@ -31,7 +31,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.sps.data.Comment;
 
-/** Servlet that returns your comments */
+/** Servlet that returns users comments */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -44,12 +44,11 @@ public class DataServlet extends HttpServlet {
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(numComments));
 
     ArrayList<Comment> commentsList = new ArrayList();
-    for (Entity entity: results) {
+    for (Entity entity : results) {
       String text = (String) entity.getProperty("text");
       String username = (String) entity.getProperty("username");
       long timestamp = (long) entity.getProperty("timestamp");
-      Comment newComment = new Comment(text, username, timestamp);
-      commentsList.add(newComment);
+      commentsList.add(new Comment(text, username, timestamp));
     }
 
     Gson gson = new Gson();
@@ -61,13 +60,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get username and comment from form
-    String commentText = request.getParameter("comment");
-    String username = request.getParameter("username");
     // Store comment
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("text", commentText);
-    commentEntity.setProperty("username", username);
+    commentEntity.setProperty("text", request.getParameter("comment"));
+    commentEntity.setProperty("username", request.getParameter("username"));
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

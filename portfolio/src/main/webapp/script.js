@@ -1,6 +1,6 @@
 // Copyright 2019 Google LLC
 //
-// Licensed under the Apache License, Version 2.0 (the 'License');
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -38,8 +38,8 @@ async function getComments(commentLimit) {
 }
 
 function filterComments(value) {
-  var commentLimit = parseInt(value);
-  if (commentLimit >= 0 ) {
+  const commentLimit = Number(value);
+  if (commentLimit >= 0) {
     getComments(commentLimit.toString(10));
   }
 }

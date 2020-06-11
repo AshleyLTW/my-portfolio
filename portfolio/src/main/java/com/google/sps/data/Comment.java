@@ -1,6 +1,5 @@
 package com.google.sps.data;
 
-/** A comment */
 public final class Comment {
 
     private final String text;
