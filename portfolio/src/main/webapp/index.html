@@ -44,9 +44,13 @@
         <p>Leave a comment!</p>
         <input type="text" name="username" value="Username">
         <input type="text" name="comment" value="My comment is...">
-        Show me this many comments: <input type="text" name="numComments" value="5">
         <input type="submit" value="Submit">
       </form>
+<!--      <form>-->
+        Show me this many comments: <input type="number" id="numComments" value="5" min="1" pattern="\d+" onchange="filterComments(this.value)">
+<!--        <input type="submit" value="Submit">-->
+<!--      </form>-->
+
 
     </div>
   </div>
