@@ -20,30 +20,59 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.sps.data.Comment;
 
-/** Servlet that returns a hardcoded message */
+/** Servlet that returns your comments */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  ArrayList<String> commentsList = new ArrayList();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Convert ArrayList to Json
+    // Load comments from Datastore
+    int numComments = Integer.parseInt(request.getParameter("numComments"));
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(numComments));
+
+    ArrayList<Comment> commentsList = new ArrayList();
+    for (Entity entity: results) {
+      String text = (String) entity.getProperty("text");
+      String username = (String) entity.getProperty("username");
+      long timestamp = (long) entity.getProperty("timestamp");
+      Comment newComment = new Comment(text, username, timestamp);
+      commentsList.add(newComment);
+    }
+
     Gson gson = new Gson();
-    String json = gson.toJson(commentsList);
-    // Send JSON as response
+    String jsonComments = gson.toJson(commentsList);
+
     response.setContentType("application/json");
-    response.getWriter().println(json);
+    response.getWriter().println(jsonComments);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Add comment to list of comments
-    // TODO: Add functionality to store and display usernames
-    String newComment = request.getParameter("comment");
-    commentsList.add(newComment);
+    // Get username and comment from form
+    String commentText = request.getParameter("comment");
+    String username = request.getParameter("username");
+    // Store comment
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("text", commentText);
+    commentEntity.setProperty("username", username);
+    commentEntity.setProperty("timestamp", System.currentTimeMillis());
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
     response.sendRedirect("/index.html");
   }
 }
