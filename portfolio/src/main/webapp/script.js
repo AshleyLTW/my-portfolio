@@ -28,7 +28,7 @@ function addRandomGreeting() {
 }
 
 async function getComments() {
-  const response = await fetch('/data');
+  const response = await fetch('/data?numComments=5');
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
