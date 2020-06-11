@@ -27,8 +27,8 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-async function getComments() {
-  const response = await fetch('/data?numComments=5');
+async function getComments(commentLimit) {
+  const response = await fetch('/data?numComments=' + commentLimit);
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
@@ -38,7 +38,10 @@ async function getComments() {
 }
 
 function filterComments(value) {
-  console.log(value);
+  var commentLimit = parseInt(value);
+  if (commentLimit >= 0 ) {
+    getComments(commentLimit.toString(10));
+  }
 }
 
 function createListElement(comment) {
