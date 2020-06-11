@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
   <script src="script.js"></script>
 </head>
-<body onload="getComments()">
+<body onload="getComments(5)">
   <!-- Navigation bar -->
   <ul class="nav-bar">
       <li><a href="index.html">Home</a>
@@ -46,6 +46,8 @@
         <input type="text" name="comment" value="My comment is...">
         <input type="submit" value="Submit">
       </form>
+      Show me this many comments: <input type="number" id="numComments" value="5" onchange="filterComments(this.value)">
+
 
     </div>
   </div>
