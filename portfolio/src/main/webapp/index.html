@@ -44,6 +44,13 @@
         <p>Leave a comment!</p>
         <input type="text" name="username" value="Username">
         <input type="text" name="comment" value="My comment is...">
+        <label for="mood">Choose a mood:</label>
+        <select name="mood" id="mood">
+          <option value="happy">&#128516</option>
+          <option value="love">&#128525</option>
+          <option value="laugh">&#128514</option>
+          <option value="off">&#128244</option>
+        </select>
         <input type="submit" value="Submit">
       </form>
       Show me this many comments: <input type="number" id="commentLimit" value="5" onchange="filterComments(this.value)">
