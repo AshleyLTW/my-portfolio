@@ -53,6 +53,6 @@ async function deleteComments() {
 
 function createListElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = comment.username + ': ' + comment.text;
+  liElement.innerText = comment.username + ': ' + comment.text + ' ' + comment.mood;
   return liElement;
 }

@@ -47,8 +47,9 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results) {
       String text = (String) entity.getProperty("text");
       String username = (String) entity.getProperty("username");
+      String mood = (String) entity.getProperty("mood");
       long timestamp = (long) entity.getProperty("timestamp");
-      commentsList.add(new Comment(text, username, timestamp));
+      commentsList.add(new Comment(text, username, mood, timestamp));
     }
 
     Gson gson = new Gson();
@@ -64,6 +65,7 @@ public class DataServlet extends HttpServlet {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("text", request.getParameter("comment"));
     commentEntity.setProperty("username", request.getParameter("username"));
+    commentEntity.setProperty("mood", request.getParameter("mood"));
     commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
