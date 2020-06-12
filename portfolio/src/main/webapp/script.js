@@ -28,7 +28,7 @@ function addRandomGreeting() {
 }
 
 async function getComments(commentLimit) {
-  const response = await fetch('/data?commentLimit=' + commentLimit);
+  const response = await fetch('/data?commentLimit=' + commentLimit + '&order=desc');
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
