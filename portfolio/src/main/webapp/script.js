@@ -55,10 +55,12 @@ async function deleteComments() {
 }
 
 function reorderComments() {
-  if (order === "desc") {
-    order = "asc";
+  if (order === 'desc') {
+    order = 'asc';
+    document.getElementById('reorderButton').innerText = "Newest first";
   } else {
-    order = "desc";
+    order = 'desc';
+    document.getElementById('reorderButton').innerText = "Oldest first";
   }
   getComments(document.getElementById('commentLimit').value);
 }
