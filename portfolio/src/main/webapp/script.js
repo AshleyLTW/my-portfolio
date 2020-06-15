@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Global variable for ordering of comments
+let order = "desc";
+
 /**
  * Adds a random greeting to the page.
  */
@@ -28,7 +31,7 @@ function addRandomGreeting() {
 }
 
 async function getComments(commentLimit) {
-  const response = await fetch('/data?commentLimit=' + commentLimit);
+  const response = await fetch('/data?commentLimit=' + commentLimit + '&order=' + order);
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
@@ -51,8 +54,19 @@ async function deleteComments() {
   getComments(document.getElementById('commentLimit').value);
 }
 
+function reorderComments() {
+  if (order === 'desc') {
+    order = 'asc';
+    document.getElementById('reorderButton').innerText = "Newest first";
+  } else {
+    order = 'desc';
+    document.getElementById('reorderButton').innerText = "Oldest first";
+  }
+  getComments(document.getElementById('commentLimit').value);
+}
+
 function createListElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = comment.username + ': ' + comment.text;
+  liElement.innerText = comment.username + ': ' + comment.text + ' ' + comment.mood;
   return liElement;
 }
