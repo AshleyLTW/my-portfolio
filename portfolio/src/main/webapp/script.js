@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // Global variable for ordering of comments
-var order = "desc";
+let order = "desc";
 
 /**
  * Adds a random greeting to the page.
