@@ -59,6 +59,24 @@ async function getComments(commentLimit) {
   messageContainer.innerHTML = "";
   for (const message of messages) {
     messageContainer.appendChild(createListElement(message));
+    if (message.imageURL !== null) {
+      messageContainer.appendChild(createImageElement(message.imageURL));
+    }
+  }
+
+  function createListElement(comment) {
+    const liElement = document.createElement("li");
+    liElement.innerText =
+      comment.username + ": " + comment.text + " " + comment.mood;
+    return liElement;
+  }
+
+  function createImageElement(imageURL) {
+    const liElement = document.createElement("li");
+    const img = document.createElement("img");
+    img.src = imageURL;
+    liElement.innerHTML = img;
+    return liElement;
   }
 }
 
@@ -88,11 +106,4 @@ function reorderComments() {
     document.getElementById("reorderButton").innerText = "Oldest first";
   }
   getComments(document.getElementById("commentLimit").value);
-}
-
-function createListElement(comment) {
-  const liElement = document.createElement("li");
-  liElement.innerText =
-    comment.username + ": " + comment.text + " " + comment.mood;
-  return liElement;
 }
