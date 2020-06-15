@@ -10,7 +10,7 @@ public final class Comment {
     public Comment(String text, String username, String mood, long timestamp) {
         this.text = text;
         this.username = username;
-        this.timestamp = timestamp;
         this.mood = mood;
+        this.timestamp = timestamp;
     }
 }
