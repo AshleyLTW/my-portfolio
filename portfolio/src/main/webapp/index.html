@@ -41,7 +41,7 @@
       <h3>Comments</h3>
       <ul id="message-container"></ul>
 
-      <form action="data" method="POST" enctype="multipart/form-data">
+      <form id="comment-form" action="data" method="POST" enctype="multipart/form-data">
         <p>Leave a comment!</p>
         <input type="text" name="username" value="Username">
         <input type="text" name="comment" value="My comment is...">
@@ -58,7 +58,7 @@
         </select>
         <p>Upload an image:</p>
         <input type="file" name="image">
-        <input type="submit" value="Submit">
+        <input id="submit-button" class="hidden" type="submit" value="Submit">
       </form>
 
       <p>Show me this many comments: <input type="number" id="commentLimit" value="5" onchange="filterComments(this.value)"></p>

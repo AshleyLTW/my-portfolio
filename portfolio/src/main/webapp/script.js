@@ -33,6 +33,21 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+/**
+ * Handles uploading images.
+ */
+
+async function fetchBlobstoreURLAndShowSubmit() {
+  const response = await fetch("/blobstore-upload-url");
+  const commentForm = document.getElementById("comment-form");
+  const submitButton = document.getElementById("submit-button");
+  commentForm.action = response;
+  submitButton.classList.remove("hidden");
+}
+
+/**
+ * Handles displaying comments.
+ */
 async function getComments(commentLimit) {
   const response = await fetch(
     "/data?commentLimit=" + commentLimit + "&order=" + order
