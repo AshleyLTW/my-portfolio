@@ -1,15 +1,16 @@
 package com.google.sps.data;
 
-/** A comment */
 public final class Comment {
 
     private final String text;
     private final String username;
+    private final String mood;
     private final long timestamp;
 
-    public Comment(String text, String username, long timestamp) {
+    public Comment(String text, String username, String mood, long timestamp) {
         this.text = text;
         this.username = username;
+        this.mood = mood;
         this.timestamp = timestamp;
     }
 }

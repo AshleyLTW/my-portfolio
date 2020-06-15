@@ -1,6 +1,6 @@
 // Copyright 2019 Google LLC
 //
-// Licensed under the Apache License, Version 2.0 (the 'License');
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -11,6 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+// Global variable for ordering of comments
+let order = "desc";
 
 /**
  * Adds a random greeting to the page.
@@ -28,7 +31,7 @@ function addRandomGreeting() {
 }
 
 async function getComments(commentLimit) {
-  const response = await fetch('/data?numComments=' + commentLimit);
+  const response = await fetch('/data?commentLimit=' + commentLimit + '&order=' + order);
   const messages = await response.json();
   const messageContainer = document.getElementById('message-container')
   messageContainer.innerHTML = '';
@@ -38,14 +41,32 @@ async function getComments(commentLimit) {
 }
 
 function filterComments(value) {
-  var commentLimit = parseInt(value);
-  if (commentLimit >= 0 ) {
+  const commentLimit = Number(value);
+  if (commentLimit >= 0) {
     getComments(commentLimit.toString(10));
   }
 }
 
+async function deleteComments() {
+  const response = await fetch('/delete-data', {
+    method: 'POST'
+    })
+  getComments(document.getElementById('commentLimit').value);
+}
+
+function reorderComments() {
+  if (order === 'desc') {
+    order = 'asc';
+    document.getElementById('reorderButton').innerText = "Newest first";
+  } else {
+    order = 'desc';
+    document.getElementById('reorderButton').innerText = "Oldest first";
+  }
+  getComments(document.getElementById('commentLimit').value);
+}
+
 function createListElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = comment.username + ': ' + comment.text;
+  liElement.innerText = comment.username + ': ' + comment.text + ' ' + comment.mood;
   return liElement;
 }

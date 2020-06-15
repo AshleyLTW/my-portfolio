@@ -26,8 +26,6 @@
       <button onclick="addRandomGreeting()">Hello</button>
       <div id="greeting-container"></div>
 
-      <ul id="message-container"></ul>
-
       <h3>About me</h3>
       <p>Hi! My name is Ashley, I'm a rising Junior studying CS at Harvard. I went to high school in Sydney, but I now spend most of my time either in Boston (where school is) or Melbourne (where my family now is).
 
@@ -40,15 +38,32 @@
 
       <p>Click <a href="gallery.html">here</a> for pictures of Cinnamon!
 
+      <h3>Comments</h3>
+      <ul id="message-container"></ul>
+
       <form action="data" method="POST">
         <p>Leave a comment!</p>
         <input type="text" name="username" value="Username">
         <input type="text" name="comment" value="My comment is...">
+        <label for="mood">Choose a mood:</label>
+        <select name="mood" id="mood">
+          <!-- Happy emoji -->
+          <option value="&#128516">&#128516</option>
+          <!-- Heart eyes emoji -->
+          <option value="&#128525">&#128525</option>
+          <!-- Cry laugh emoji -->
+          <option value="&#128514">&#128514</option>
+          <!-- Off work emoji -->
+          <option value="&#128244">&#128244</option>
+        </select>
         <input type="submit" value="Submit">
       </form>
-      Show me this many comments: <input type="number" id="numComments" value="5" onchange="filterComments(this.value)">
 
+      <p>Show me this many comments: <input type="number" id="commentLimit" value="5" onchange="filterComments(this.value)"></p>
 
+      <p>Delete all comments: <button type="button" onclick="deleteComments()">Delete</button></p>
+
+      <p>Reorder the comments: <button type="button" id="reorderButton" onClick="reorderComments()">Oldest first</button>
     </div>
   </div>
 </body>
