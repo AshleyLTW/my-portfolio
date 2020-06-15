@@ -34,8 +34,13 @@ function addRandomGreeting() {
 }
 
 /**
- * Handles uploading images.
+ * Handles creating blobstore url and fetching comments on load.
  */
+
+function loadComponents() {
+  fetchBlobstoreURLAndShowSubmit();
+  getComments(5);
+}
 
 async function fetchBlobstoreURLAndShowSubmit() {
   const response = await fetch("/blobstore-upload-url");
@@ -45,9 +50,6 @@ async function fetchBlobstoreURLAndShowSubmit() {
   submitButton.classList.remove("hidden");
 }
 
-/**
- * Handles displaying comments.
- */
 async function getComments(commentLimit) {
   const response = await fetch(
     "/data?commentLimit=" + commentLimit + "&order=" + order
@@ -60,6 +62,9 @@ async function getComments(commentLimit) {
   }
 }
 
+/**
+ * Handles manipulating comments.
+ */
 function filterComments(value) {
   const commentLimit = Number(value);
   if (commentLimit >= 0) {
