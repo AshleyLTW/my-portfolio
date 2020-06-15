@@ -59,7 +59,8 @@ async function getComments(commentLimit) {
   messageContainer.innerHTML = "";
   for (const message of messages) {
     messageContainer.appendChild(createListElement(message));
-    if (message.imageURL !== null) {
+    if (message.imageURL !== "") {
+      console.log(message.imageURL);
       messageContainer.appendChild(createImageElement(message.imageURL));
     }
   }
@@ -76,6 +77,7 @@ async function getComments(commentLimit) {
     const img = document.createElement("img");
     img.src = imageURL;
     liElement.innerHTML = img;
+    console.log(img);
     return liElement;
   }
 }
