@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -39,7 +40,12 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Load comments from Datastore
     int commentLimit = Integer.parseInt(request.getParameter("commentLimit"));
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Comment");
+    if (Objects.equals(request.getParameter("order"), "desc")) {
+      query.addSort("timestamp", SortDirection.DESCENDING);
+    } else {
+      query.addSort("timestamp", SortDirection.ASCENDING);
+    }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(commentLimit));
 
