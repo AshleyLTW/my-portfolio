@@ -41,7 +41,7 @@
       <h3>Comments</h3>
       <ul id="message-container"></ul>
 
-      <form action="data" method="POST">
+      <form action="data" method="POST" enctype="multipart/form-data">
         <p>Leave a comment!</p>
         <input type="text" name="username" value="Username">
         <input type="text" name="comment" value="My comment is...">
@@ -56,6 +56,8 @@
           <!-- Off work emoji -->
           <option value="&#128244">&#128244</option>
         </select>
+        <p>Upload an image:</p>
+        <input type="file" name="image">
         <input type="submit" value="Submit">
       </form>
 
