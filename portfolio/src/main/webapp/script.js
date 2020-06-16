@@ -24,7 +24,6 @@ function addRandomGreeting() {
     "My favourite movie (trilogy) is the Lord of The Rings",
     "There isn't enough sunshine in Melb, I find myself accidentally working in semi-darkness a lot",
   ];
-  console.log("greeted");
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
