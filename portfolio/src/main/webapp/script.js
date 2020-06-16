@@ -71,7 +71,6 @@ async function getComments(commentLimit) {
     const liElement = document.createElement("li");
     const emoji = String.fromCodePoint(comment.mood);
     liElement.innerText = `${comment.username}: ${comment.text} ${emoji}`;
-    console.log(String.fromCodePoint(comment.mood));
     return liElement;
   }
 
