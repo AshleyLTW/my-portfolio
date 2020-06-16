@@ -43,13 +43,11 @@ function loadComponents() {
 }
 
 async function fetchBlobstoreURLAndShowSubmit() {
-  console.log("start");
   const response = await fetch("/blobstore-upload-url");
   const imageURL = await response.text();
   const commentForm = document.getElementById("comment-form");
   const submitButton = document.getElementById("submit-button");
   commentForm.action = imageURL;
-  console.log(commentForm.action);
   submitButton.classList.remove("hidden");
 }
 
@@ -63,7 +61,6 @@ async function getComments(commentLimit) {
   for (const message of messages) {
     messageContainer.appendChild(createListElement(message));
     if (message.imageURL !== "") {
-      console.log(message.imageURL);
       document
         .getElementById("image-container")
         .appendChild(createImageElement(message.imageURL));
@@ -78,12 +75,8 @@ async function getComments(commentLimit) {
   }
 
   function createImageElement(imageURL) {
-    // const liElement = document.createElement("li");
     const img = document.createElement("img");
     img.src = imageURL;
-    // liElement.innerHTML = img;
-    console.log(img);
-    // console.log(liElement);
     return img;
   }
 }
