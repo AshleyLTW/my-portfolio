@@ -43,10 +43,13 @@ function loadComponents() {
 }
 
 async function fetchBlobstoreURLAndShowSubmit() {
+  console.log("start");
   const response = await fetch("/blobstore-upload-url");
+  const imageURL = await response.text();
   const commentForm = document.getElementById("comment-form");
   const submitButton = document.getElementById("submit-button");
-  commentForm.action = response;
+  commentForm.action = imageURL;
+  console.log(commentForm.action);
   submitButton.classList.remove("hidden");
 }
 
