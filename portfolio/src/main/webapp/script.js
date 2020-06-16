@@ -53,7 +53,7 @@ async function fetchBlobstoreURLAndShowSubmit() {
 
 async function getComments(commentLimit) {
   const response = await fetch(
-    "/data?commentLimit=" + commentLimit + "&order=" + order
+    `/data?commentLimit=${commentLimit}&order=${order}`
   );
   const messages = await response.json();
   const messageContainer = document.getElementById("message-container");
