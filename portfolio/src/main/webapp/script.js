@@ -64,7 +64,9 @@ async function getComments(commentLimit) {
     messageContainer.appendChild(createListElement(message));
     if (message.imageURL !== "") {
       console.log(message.imageURL);
-      messageContainer.appendChild(createImageElement(message.imageURL));
+      document
+        .getElementById("image-container")
+        .appendChild(createImageElement(message.imageURL));
     }
   }
 
@@ -76,12 +78,13 @@ async function getComments(commentLimit) {
   }
 
   function createImageElement(imageURL) {
-    const liElement = document.createElement("li");
+    // const liElement = document.createElement("li");
     const img = document.createElement("img");
     img.src = imageURL;
-    liElement.innerHTML = img;
+    // liElement.innerHTML = img;
     console.log(img);
-    return liElement;
+    // console.log(liElement);
+    return img;
   }
 }
 
