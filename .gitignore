@@ -1,6 +1,8 @@
 target/
 .idea
+.vscode
 walkthroughs
+portfolio/.*
 
 # Compiled class file
 *.class
