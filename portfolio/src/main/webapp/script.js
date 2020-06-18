@@ -52,7 +52,7 @@ async function fetchBlobstoreURLAndShowSubmit() {
 
 async function getComments(commentLimit) {
   const response = await fetch(
-    "/data?commentLimit=" + commentLimit + "&order=" + order
+    `/data?commentLimit=${commentLimit}&order=${order}`
   );
   const messages = await response.json();
   const messageContainer = document.getElementById("message-container");
@@ -68,8 +68,8 @@ async function getComments(commentLimit) {
 
   function createListElement(comment) {
     const liElement = document.createElement("li");
-    liElement.innerText =
-      comment.username + ": " + comment.text + " " + comment.mood;
+    const emoji = String.fromCodePoint(comment.mood);
+    liElement.innerText = `${comment.username}: ${comment.text} ${emoji}`;
     return liElement;
   }
 
