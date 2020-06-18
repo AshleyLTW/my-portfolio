@@ -56,7 +56,9 @@ async function getComments(commentLimit) {
   );
   const messages = await response.json();
   const messageContainer = document.getElementById("message-container");
+  const imageContainer = document.getElementById("image-container");
   messageContainer.innerHTML = "";
+  imageContainer.innerHTML = "";
   for (const message of messages) {
     messageContainer.appendChild(createListElement(message));
     if (message.imageURL !== "") {
