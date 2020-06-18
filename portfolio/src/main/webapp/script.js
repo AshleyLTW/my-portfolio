@@ -19,27 +19,70 @@ let order = "desc";
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
-  const greetings =
-      ['I once got my hand stuck in a cow!', 'My favourite movie (trilogy) is the Lord of The Rings', 'There isn\'t enough sunshine in Melb, I find myself accidentally working in semi-darkness a lot'];
-  console.log('greeted');
+  const greetings = [
+    "I once got my hand stuck in a cow!",
+    "My favourite movie (trilogy) is the Lord of The Rings",
+    "There isn't enough sunshine in Melb, I find myself accidentally working in semi-darkness a lot",
+  ];
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
+  const greetingContainer = document.getElementById("greeting-container");
   greetingContainer.innerText = greeting;
 }
 
+/**
+ * Handles creating blobstore url and fetching comments on load.
+ */
+
+function loadComponents() {
+  fetchBlobstoreURLAndShowSubmit();
+  getComments(5);
+}
+
+async function fetchBlobstoreURLAndShowSubmit() {
+  const response = await fetch("/blobstore-upload-url");
+  const imageURL = await response.text();
+  const commentForm = document.getElementById("comment-form");
+  const submitButton = document.getElementById("submit-button");
+  commentForm.action = imageURL;
+  submitButton.classList.remove("hidden");
+}
+
 async function getComments(commentLimit) {
-  const response = await fetch('/data?commentLimit=' + commentLimit + '&order=' + order);
+  const response = await fetch(
+    "/data?commentLimit=" + commentLimit + "&order=" + order
+  );
   const messages = await response.json();
-  const messageContainer = document.getElementById('message-container')
-  messageContainer.innerHTML = '';
+  const messageContainer = document.getElementById("message-container");
+  messageContainer.innerHTML = "";
   for (const message of messages) {
     messageContainer.appendChild(createListElement(message));
+    if (message.imageURL !== "") {
+      document
+        .getElementById("image-container")
+        .appendChild(createImageElement(message.imageURL));
+    }
+  }
+
+  function createListElement(comment) {
+    const liElement = document.createElement("li");
+    liElement.innerText =
+      comment.username + ": " + comment.text + " " + comment.mood;
+    return liElement;
+  }
+
+  function createImageElement(imageURL) {
+    const img = document.createElement("img");
+    img.src = imageURL;
+    return img;
   }
 }
 
+/**
+ * Handles manipulating comments.
+ */
 function filterComments(value) {
   const commentLimit = Number(value);
   if (commentLimit >= 0) {
@@ -48,25 +91,19 @@ function filterComments(value) {
 }
 
 async function deleteComments() {
-  const response = await fetch('/delete-data', {
-    method: 'POST'
-    })
-  getComments(document.getElementById('commentLimit').value);
+  const response = await fetch("/delete-data", {
+    method: "POST",
+  });
+  getComments(document.getElementById("commentLimit").value);
 }
 
 function reorderComments() {
-  if (order === 'desc') {
-    order = 'asc';
-    document.getElementById('reorderButton').innerText = "Newest first";
+  if (order === "desc") {
+    order = "asc";
+    document.getElementById("reorderButton").innerText = "Newest first";
   } else {
-    order = 'desc';
-    document.getElementById('reorderButton').innerText = "Oldest first";
+    order = "desc";
+    document.getElementById("reorderButton").innerText = "Oldest first";
   }
-  getComments(document.getElementById('commentLimit').value);
-}
-
-function createListElement(comment) {
-  const liElement = document.createElement('li');
-  liElement.innerText = comment.username + ': ' + comment.text + ' ' + comment.mood;
-  return liElement;
+  getComments(document.getElementById("commentLimit").value);
 }

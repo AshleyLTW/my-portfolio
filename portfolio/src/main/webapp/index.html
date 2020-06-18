@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
   <script src="script.js"></script>
 </head>
-<body onload="getComments(5)">
+<body onload="loadComponents()">
   <!-- Navigation bar -->
   <ul class="nav-bar">
       <li><a href="index.html">Home</a>
@@ -40,8 +40,9 @@
 
       <h3>Comments</h3>
       <ul id="message-container"></ul>
+      <div id="image-container"></div>
 
-      <form action="data" method="POST">
+      <form id="comment-form" method="POST" enctype="multipart/form-data">
         <p>Leave a comment!</p>
         <input type="text" name="username" value="Username">
         <input type="text" name="comment" value="My comment is...">
@@ -56,7 +57,9 @@
           <!-- Off work emoji -->
           <option value="&#128244">&#128244</option>
         </select>
-        <input type="submit" value="Submit">
+        <p>Upload an image:</p>
+        <input type="file" name="image">
+        <input id="submit-button" class="hidden" type="submit" value="Submit">
       </form>
 
       <p>Show me this many comments: <input type="number" id="commentLimit" value="5" onchange="filterComments(this.value)"></p>
