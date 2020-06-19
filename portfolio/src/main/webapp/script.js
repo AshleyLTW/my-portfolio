@@ -36,7 +36,6 @@ function addRandomGreeting() {
  * Handles Google Maps API.
  */
 function createMap() {
-  console.log("yep");
   const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -33.866578, lng: 151.195688 },
     zoom: 13,
