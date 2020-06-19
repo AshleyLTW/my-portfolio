@@ -21,6 +21,17 @@ import org.jsoup.safety.Whitelist;
 public class MarkerServlet extends HttpServlet {
 
   @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json");
+
+    Collection<Marker> markers = getMarkers();
+    Gson gson = new Gson();
+    String json = gson.toJson(markers);
+
+    response.getWriter().println(json);
+  }
+
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
@@ -28,6 +39,24 @@ public class MarkerServlet extends HttpServlet {
 
     Marker marker = new Marker(lat, lng, content);
     storeMarker(marker);
+  }
+
+  private Collection<Marker> getMarkers() {
+    Collection<Marker> markers = new ArrayList<>();
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Marker");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      double lat = (double) entity.getProperty("lat");
+      double lng = (double) entity.getProperty("lng");
+      String content = (String) entity.getProperty("content");
+
+      Marker marker = new Marker(lat, lng, content);
+      markers.add(marker);
+    }
+    return markers;
   }
 
   public void storeMarker(Marker marker) {
