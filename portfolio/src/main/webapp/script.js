@@ -36,10 +36,15 @@ function addRandomGreeting() {
  * Handles Google Maps API.
  */
 function createMap() {
-  console.log("yep");
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 37.422, lng: -122.084 },
-    zoom: 16,
+    center: { lat: -33.866578, lng: 151.195688 },
+    zoom: 13,
+  });
+
+  const harbourBridgeMarker = new google.maps.Marker({
+    position: { lat: -33.8523, lng: 151.2108 },
+    map: map,
+    title: "Sydney Harbour Bridge",
   });
 }
 
