@@ -55,7 +55,6 @@ function createMap() {
   });
 }
 
-/** Creates a marker that shows a textbox the user can edit. */
 function createMarkerForEdit(lat, lng) {
   if (editMarker) {
     editMarker.setMap(null);
@@ -77,16 +76,13 @@ function createMarkerForEdit(lat, lng) {
   infoWindow.open(map, editMarker);
 }
 
-/**
- * Builds and returns HTML elements that show an editable textbox and a submit
- * button.
- */
 function buildInfoWindowInput(lat, lng) {
   const textBox = document.createElement("textarea");
   const button = document.createElement("button");
   button.appendChild(document.createTextNode("Submit"));
 
   button.onclick = () => {
+    postMarker(lat, lng, textBox.value);
     createMarkerForDisplay(lat, lng, textBox.value);
     editMarker.setMap(null);
   };
@@ -99,7 +95,15 @@ function buildInfoWindowInput(lat, lng) {
   return containerDiv;
 }
 
-/** Creates a marker that shows a read-only info window when clicked. */
+function postMarker(lat, lng, content) {
+  const params = new URLSearchParams();
+  params.append("lat", lat);
+  params.append("lng", lng);
+  params.append("content", content);
+
+  fetch("/markers", { method: "POST", body: params });
+}
+
 function createMarkerForDisplay(lat, lng, content) {
   const marker = new google.maps.Marker({
     position: { lat: lat, lng: lng },
