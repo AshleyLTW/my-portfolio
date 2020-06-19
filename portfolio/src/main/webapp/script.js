@@ -57,7 +57,6 @@ function createMap() {
 
 /** Creates a marker that shows a textbox the user can edit. */
 function createMarkerForEdit(lat, lng) {
-  console.log("create marker");
   if (editMarker) {
     editMarker.setMap(null);
   }
@@ -83,7 +82,6 @@ function createMarkerForEdit(lat, lng) {
  * button.
  */
 function buildInfoWindowInput(lat, lng) {
-  console.log("build window");
   const textBox = document.createElement("textarea");
   const button = document.createElement("button");
   button.appendChild(document.createTextNode("Submit"));
