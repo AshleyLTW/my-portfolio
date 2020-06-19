@@ -53,6 +53,18 @@ function createMap() {
   map.addListener("click", (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   });
+
+  fetchMarkers();
+}
+
+function fetchMarkers() {
+  fetch("/markers")
+    .then((response) => response.json())
+    .then((markers) => {
+      markers.forEach((marker) => {
+        createMarkerForDisplay(marker.lat, marker.lng, marker.content);
+      });
+    });
 }
 
 function createMarkerForEdit(lat, lng) {
