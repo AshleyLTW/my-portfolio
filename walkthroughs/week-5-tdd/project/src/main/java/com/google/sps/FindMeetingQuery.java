@@ -18,11 +18,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public final class FindMeetingQuery {
   // Initialise intial free time array
-  private Collection<TimeRange> freeTimes = new HashSet<>();
+  private Collection<TimeRange> freeTimes = new ArrayList<TimeRange>();
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     Collection<String> requestAttendees = request.getAttendees();
@@ -36,9 +37,11 @@ public final class FindMeetingQuery {
     }
 
     // Eliminate all blocks too short for the meeting
-    for (TimeRange freeTime : freeTimes) {
+    Iterator<TimeRange> i = freeTimes.iterator();
+    while (i.hasNext()) {
+      TimeRange freeTime = i.next();
       if (freeTime.duration() < request.getDuration()) {
-        freeTimes.remove(freeTime);
+        i.remove();
       }
     }
 
@@ -48,20 +51,24 @@ public final class FindMeetingQuery {
   }
 
   private void modifyFreeTime(TimeRange eventTime) {
-    for (TimeRange freeTime : freeTimes) {
+    Iterator<TimeRange> i = freeTimes.iterator();
+    int eventStart = eventTime.start();
+    int eventEnd = eventTime.end();
+    ArrayList<TimeRange> newFreeTimes = new ArrayList<>();
+    while (i.hasNext()) {
+      TimeRange freeTime = i.next();
       int freeStart = freeTime.start();
-      int eventStart = eventTime.start();
       int freeEnd = freeTime.end();
-      int eventEnd = eventTime.end();
       if (Math.max(freeStart, eventStart) < Math.min(freeEnd, eventEnd)) {
+        i.remove();
         if (freeStart < eventStart) {
-          freeTimes.add(TimeRange.fromStartEnd(freeStart, eventStart, false));
+          newFreeTimes.add(TimeRange.fromStartEnd(freeStart, eventStart, false));
         }
         if (eventEnd < freeEnd) {
-          freeTimes.add(TimeRange.fromStartEnd(eventEnd, freeEnd, false));
+          newFreeTimes.add(TimeRange.fromStartEnd(eventEnd, freeEnd, false));
         }
-        freeTimes.remove(freeTime);
       }
     }
+    freeTimes.addAll(newFreeTimes);
   }
 }
