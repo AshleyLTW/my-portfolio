@@ -15,9 +15,28 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class FindMeetingQuery {
+  // Initialise intial free time array
+  private Collection<TimeRange> freeTimes = new HashSet<>();
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+    Collection<String> requestAttendees = request.getAttendees();
+    freeTimes.add(TimeRange.fromStartEnd(0, TimeRange.getTimeInMinutes(23, 59), false));
+
+    for (Event event : events) {
+      if (event.getAttendees().contains(requestAttendees)) {
+        modifyFreeTime(event.getWhen());
+        break;
+      }
+    }
+
     throw new UnsupportedOperationException("TODO: Implement this method.");
+  }
+
+  private void modifyFreeTime(TimeRange timeRange) {
+
   }
 }
