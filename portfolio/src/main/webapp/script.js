@@ -14,6 +14,9 @@
 
 // Global variable for ordering of comments
 let order = "desc";
+// Global variables for map and markers
+let map;
+let editMarker;
 
 /**
  * Adds a random greeting to the page.
@@ -36,7 +39,7 @@ function addRandomGreeting() {
  * Handles Google Maps API.
  */
 function createMap() {
-  const map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -33.866578, lng: 151.195688 },
     zoom: 13,
   });
@@ -45,6 +48,67 @@ function createMap() {
     position: { lat: -33.8523, lng: 151.2108 },
     map: map,
     title: "Sydney Harbour Bridge",
+  });
+
+  map.addListener("click", (event) => {
+    createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+  });
+}
+
+/** Creates a marker that shows a textbox the user can edit. */
+function createMarkerForEdit(lat, lng) {
+  if (editMarker) {
+    editMarker.setMap(null);
+  }
+
+  editMarker = new google.maps.Marker({
+    position: { lat: lat, lng: lng },
+    map: map,
+  });
+
+  const infoWindow = new google.maps.InfoWindow({
+    content: buildInfoWindowInput(lat, lng),
+  });
+
+  google.maps.event.addListener(infoWindow, "closeclick", () => {
+    editMarker.setMap(null);
+  });
+
+  infoWindow.open(map, editMarker);
+}
+
+/**
+ * Builds and returns HTML elements that show an editable textbox and a submit
+ * button.
+ */
+function buildInfoWindowInput(lat, lng) {
+  const textBox = document.createElement("textarea");
+  const button = document.createElement("button");
+  button.appendChild(document.createTextNode("Submit"));
+
+  button.onclick = () => {
+    createMarkerForDisplay(lat, lng, textBox.value);
+    editMarker.setMap(null);
+  };
+
+  const containerDiv = document.createElement("div");
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement("br"));
+  containerDiv.appendChild(button);
+
+  return containerDiv;
+}
+
+/** Creates a marker that shows a read-only info window when clicked. */
+function createMarkerForDisplay(lat, lng, content) {
+  const marker = new google.maps.Marker({
+    position: { lat: lat, lng: lng },
+    map: map,
+  });
+
+  const infoWindow = new google.maps.InfoWindow({ content: content });
+  marker.addListener("click", () => {
+    infoWindow.open(map, marker);
   });
 }
 
