@@ -31,21 +31,22 @@ public final class FindMeetingQuery {
     // Eliminate all times with conflicting events
     for (Event event : events) {
       if (!Collections.disjoint(requestAttendees, event.getAttendees())) {
-        freeTimes = modifyFreeTime(event.getWhen(), freeTimes);
+        modifyFreeTime(event.getWhen(), freeTimes);
       }
     }
 
     // Eliminate all blocks too short for the meeting
-    freeTimes = checkDuration(freeTimes, request.getDuration());
+    checkDuration(freeTimes, request.getDuration());
+
     // Consider optional attendees
     for (String attendee : request.getOptionalAttendees()) {
       ArrayList<TimeRange> newFreeTimes = new ArrayList<TimeRange>(freeTimes);
       for (Event event : events) {
         if (event.getAttendees().contains(attendee)) {
-          newFreeTimes = modifyFreeTime(event.getWhen(), newFreeTimes);
+          modifyFreeTime(event.getWhen(), newFreeTimes);
         }
       }
-      newFreeTimes = checkDuration(newFreeTimes, request.getDuration());
+      checkDuration(newFreeTimes, request.getDuration());
       if (!newFreeTimes.isEmpty()) {
         freeTimes = newFreeTimes;
       }
@@ -55,7 +56,7 @@ public final class FindMeetingQuery {
     return freeTimes;
   }
 
-  private ArrayList<TimeRange> checkDuration(ArrayList<TimeRange> freeTimes, long duration) {
+  private void checkDuration(ArrayList<TimeRange> freeTimes, long duration) {
     Iterator<TimeRange> i = freeTimes.iterator();
     while (i.hasNext()) {
       TimeRange freeTime = i.next();
@@ -63,10 +64,9 @@ public final class FindMeetingQuery {
         i.remove();
       }
     }
-    return freeTimes;
   }
 
-  private ArrayList<TimeRange> modifyFreeTime(TimeRange eventTime, ArrayList<TimeRange> freeTimes) {
+  private void modifyFreeTime(TimeRange eventTime, ArrayList<TimeRange> freeTimes) {
     Iterator<TimeRange> i = freeTimes.iterator();
     int eventStart = eventTime.start();
     int eventEnd = eventTime.end();
@@ -86,6 +86,5 @@ public final class FindMeetingQuery {
       }
     }
     freeTimes.addAll(newFreeTimes);
-    return freeTimes;
   }
 }
