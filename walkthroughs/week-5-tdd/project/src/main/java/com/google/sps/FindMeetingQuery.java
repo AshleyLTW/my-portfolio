@@ -37,9 +37,6 @@ public final class FindMeetingQuery {
 
     // Eliminate all blocks too short for the meeting
     freeTimes = checkDuration(freeTimes, request.getDuration());
-    System.out.println("OPTIONAL:");
-    System.out.println(request.getOptionalAttendees());
-    System.out.println(freeTimes);
     // Consider optional attendees
     for (String attendee : request.getOptionalAttendees()) {
       ArrayList<TimeRange> newFreeTimes = new ArrayList<TimeRange>(freeTimes);
@@ -54,7 +51,6 @@ public final class FindMeetingQuery {
       }
     }
 
-    System.out.println(freeTimes);
     Collections.sort(freeTimes, TimeRange.ORDER_BY_START);
     return freeTimes;
   }
