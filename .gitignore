@@ -1,7 +1,7 @@
 target/
 .idea
-.vscode
-walkthroughs
+.vscode/
+walkthroughs/
 portfolio/.*
 
 # Compiled class file
